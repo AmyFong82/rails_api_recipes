@@ -58,4 +58,31 @@ RSpec.describe "Recipes API", type: :request do
       }
     }
 
+    context 'when the request is valid' do
+      before { post '/recipes', params: valid_attributes}
+
+      it 'creates a recipe' do
+        expect(josn['name']).to eq('butteredBagel')
+      end
+
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when the request is invalid' do
+      before { post '/recipes', params: { name: "ABC"}}
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+      
+      it 'returns a validation failure message' do
+        expect(response.body)
+          .to match(/Validation failed/)
+      end
+    end
+
+
+
 end
