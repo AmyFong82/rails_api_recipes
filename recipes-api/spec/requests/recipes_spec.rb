@@ -62,12 +62,17 @@ RSpec.describe "Recipes API", type: :request do
       before { post '/recipes', params: valid_attributes}
 
       it 'creates a recipe' do
-        expect(josn['name']).to eq('butteredBagel')
+        expect(json['name']).to eq('butteredBagel')
+      end
+
+      it 'returns an empty Response body' do
+        expect(response.body).to be_empty
       end
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
       end
+
     end
 
     context 'when the request is invalid' do
@@ -79,9 +84,65 @@ RSpec.describe "Recipes API", type: :request do
       
       it 'returns a validation failure message' do
         expect(response.body)
-          .to match(/Validation failed/)
+          .to match(/Validation failed: Ingredients can't be blank/)
       end
     end
+
+    context 'when the recipe already exists' do
+      before { post '/recipes', params: valid_attributes}
+      before { post '/recipes', params: valid_attributes}
+
+      it 'returns error message in response body' do
+        expect(response.body)
+          .to match(/Recipe already exists/)
+      end
+
+      it 'returns status code 400' do
+        expect(response).to have_http_status(400)
+      end
+    end
+  end
+
+  # Test suite for PUT /recipes
+  describe 'PUT /recipes' do
+    let(:valid_attributes) {
+      { name: "butteredBagel", 
+        ingredients: ["1 bagel", "2 tbsp butter"],
+        instructions: ["cut the bagel", "spread butter on bagel"]
+      }
+    }
+
+    let(:invalid_attributes){
+      { name: "butteredBB", 
+        ingredients: ["1 bagel", "2 tbsp butter"],
+        instructions: ["cut the bagel", "spread butter on bagel"]
+      }
+    }
+
+    context 'when the record exists' do
+      before { put "/recipes", params: valid_attributes }
+
+      it 'updates the record' do
+        expect(response.body).to be_empty
+      end
+
+      it 'returns status code 204' do
+        expect(response).to have_http_status(204)
+      end
+    end
+
+    context 'when the record does not exist' do
+      before { put "/recipes", params: invalid_attributes }
+
+      it 'returns error message' do
+        expect(response.body).to match(/Recipe does not exist/)
+      end
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+    end
+  end
 
 
 
