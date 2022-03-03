@@ -49,5 +49,13 @@ RSpec.describe "Recipes API", type: :request do
   end
 
   # Test suite for POST /recipes
+  describe 'POST /recipes' do
+    # valid payload
+    let(:valid_attributes) {
+      { name: "butteredBagel", 
+        ingredients: ["1 bagel", "butter"],
+        instructions: ["cut the bagel", "spread butter on bagel"]
+      }
+    }
 
 end
