@@ -143,7 +143,4 @@ RSpec.describe "Recipes API", type: :request do
       end
     end
   end
-
-
-
 end
