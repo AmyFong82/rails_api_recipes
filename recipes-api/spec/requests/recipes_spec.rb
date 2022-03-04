@@ -41,6 +41,7 @@ RSpec.describe "Recipes API", type: :request do
 
       it 'returns an empty Json {}' do
         expect(response).to eq({})
+      end
 
       it 'returns status code 200' do
         expect(response).to have_http_status(200)
@@ -101,6 +102,7 @@ RSpec.describe "Recipes API", type: :request do
         expect(response).to have_http_status(400)
       end
     end
+
   end
 
   # Test suite for PUT /recipes
@@ -142,5 +144,7 @@ RSpec.describe "Recipes API", type: :request do
         expect(response).to have_http_status(404)
       end
     end
+
   end
+
 end
