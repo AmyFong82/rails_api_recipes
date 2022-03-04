@@ -4,7 +4,9 @@ class RecipesController < ApplicationController
   #GET /recipes
   def index
     @recipes = Recipe.all
-    json_response(@recipes)
+    @recipeNames = []
+    @recipes.each {|e| @recipeNames << e.name}
+    json_response({recipeNames: @recipeNames})
   end
 
   #POST /recipes
