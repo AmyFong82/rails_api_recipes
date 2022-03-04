@@ -23,7 +23,7 @@ RSpec.describe "Recipes API", type: :request do
 
   # Test suite for GET /recipes/details/:name
   describe 'GET /recipes/details/:name' do
-    before { get "/recipes/details/#{name}" }
+    before { get "/recipes/details/#{:name}" }
 
     context 'when the record exists' do
       it 'returns the recipe' do
