@@ -55,20 +55,16 @@ RSpec.describe "Recipes API", type: :request do
   describe 'POST /recipes' do
     # valid payload
     let(:valid_attributes) {
-      { 
+      { recipe:{
           name: "butteredBagel", 
           ingredients: ["1 bagel", "butter"],
           instructions: ["cut the bagel", "spread butter on bagel"]
-      
+        }
       }
     }
 
     context 'when the request is valid' do
       before { post '/recipes', params: valid_attributes}
-
-      it 'creates a recipe' do
-        expect(json['name']).to eq('butteredBagel')
-      end
 
       it 'returns an empty Response body' do
         expect(response.body).to be_empty
