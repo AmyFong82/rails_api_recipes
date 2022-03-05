@@ -39,10 +39,10 @@ RSpec.describe "Recipes API", type: :request do
     end
 
     context 'when the record does not exist' do
-      let(:name) {"I Don't Know"}
+      before { get "/recipes/details/nothing" }
 
       it 'returns an empty Json {}' do
-        expect(response).to eq({})
+        expect(json).to eq({})
       end
 
       it 'returns status code 200' do
@@ -55,9 +55,11 @@ RSpec.describe "Recipes API", type: :request do
   describe 'POST /recipes' do
     # valid payload
     let(:valid_attributes) {
-      { name: "butteredBagel", 
-        ingredients: ["1 bagel", "butter"],
-        instructions: ["cut the bagel", "spread butter on bagel"]
+      { 
+          name: "butteredBagel", 
+          ingredients: ["1 bagel", "butter"],
+          instructions: ["cut the bagel", "spread butter on bagel"]
+      
       }
     }
 
