@@ -15,9 +15,7 @@ class RecipesController < ApplicationController
   #POST /recipes
   def create
     @recipe = Recipe.create!(recipe_params)
-    json_response(@recipe, :created)
-
-    # head :no_content
+    head :no_content
   end
 
   #GET /recipes/details/:name

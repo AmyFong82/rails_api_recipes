@@ -5,5 +5,5 @@ class Recipe < ApplicationRecord
 
   # validations
   validates_presence_of :name, :ingredients, :instructions
-  validates :name, uniqueness: true
+  validates :name, uniqueness: {message: "Recipe already exists"}
 end
