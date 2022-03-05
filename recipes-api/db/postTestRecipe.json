@@ -1,0 +1,14 @@
+{
+	"name": "butteredBagel", 
+		"ingredients": [
+			"1 bagel", 
+			"butter"
+		],
+	"instructions": [
+		"cut the bagel", 
+		"spread butter on bagel"
+	]
+}
+
+
+http POST :3000/recipes recipe:='{"name": "butteredBagel4", "ingredients": ["1 bagel", "butter"],"instructions": ["cut the bagel", "spread butter on bagel"]}'

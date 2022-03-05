@@ -1,4 +1,7 @@
 class RecipesController < ApplicationController
+  #enable wrap_parameters so that the root element can be omitted.
+  wrap_parameters format: [:json]
+  
   before_action :find_recipe, only: [:show, :update]
 
   #GET /recipes
@@ -12,12 +15,22 @@ class RecipesController < ApplicationController
   #POST /recipes
   def create
     @recipe = Recipe.create!(recipe_params)
-    head :no_content
+    json_response(@recipe, :created)
+
+    # head :no_content
   end
 
   #GET /recipes/details/:name
   def show
-    json_response(@recipe)
+    if @recipe
+      @details = {
+        ingredients: @recipe.ingredients,
+        numSteps: @recipe.instructions.length
+      }
+      json_response({details: @details})
+    else
+      json_response({})
+    end
   end
 
   # PUT /recipes
@@ -29,7 +42,7 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.permit(:name, :ingredients, :instructions)
+    params.require(:recipe).permit(:name, :ingredients => [], :instructions => [])
   end
 
   def find_recipe
