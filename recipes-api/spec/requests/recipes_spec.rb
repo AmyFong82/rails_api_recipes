@@ -94,20 +94,25 @@ RSpec.describe "Recipes API", type: :request do
   # Test suite for PUT /recipes
   describe 'PUT /recipes' do
     let(:valid_attributes) {
-      { name: "butteredBagel", 
-        ingredients: ["1 bagel", "2 tbsp butter"],
-        instructions: ["cut the bagel", "spread butter on bagel"]
+      { recipe:{
+          name: "butteredBagel", 
+          ingredients: ["1 bagel", "butter"],
+          instructions: ["cut the bagel", "spread butter on bagel"]
+        }
       }
     }
 
     let(:invalid_attributes){
-      { name: "butteredBB", 
-        ingredients: ["1 bagel", "2 tbsp butter"],
-        instructions: ["cut the bagel", "spread butter on bagel"]
+      { recipe:{
+          name: "butteredBagelBB", 
+          ingredients: ["2 bagel", "butter"],
+          instructions: ["cut the bagel", "spread butter on bagel"]
+        }
       }
     }
 
     context 'when the record exists' do
+      before { post "/recipes", params: valid_attributes }
       before { put "/recipes", params: valid_attributes }
 
       it 'updates the record' do
