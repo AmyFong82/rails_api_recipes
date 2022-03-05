@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   #enable wrap_parameters so that the root element can be omitted.
   wrap_parameters format: [:json]
   
-  before_action :find_recipe, only: [:show, :update]
+  # before_action :find_recipe, only: [:show, :update]
 
   #GET /recipes
   def index
@@ -20,6 +20,7 @@ class RecipesController < ApplicationController
 
   #GET /recipes/details/:name
   def show
+    @recipe = Recipe.find_by(name: params[:name])
     if @recipe
       @details = {
         ingredients: @recipe.ingredients,
@@ -33,6 +34,7 @@ class RecipesController < ApplicationController
 
   # PUT /recipes
   def update
+    @recipe = Recipe.find_by(name: params[:recipe][:name])
     @recipe.update(recipe_params)
     head :no_content
   end
@@ -44,7 +46,7 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(:name, :ingredients => [], :instructions => [])
   end
 
-  def find_recipe
-    @recipe = Recipe.find_by(name: params[:name])
-  end
+  # def find_recipe
+  #   @recipe = Recipe.find_by(name: params[:name])
+  # end
 end
