@@ -42,6 +42,7 @@ class RecipesController < ApplicationController
   private
 
   def recipe_params
+    #when array is expected, the param symbol should have an empty [] to indicate it.
     params.require(:recipe).permit(:name, :ingredients => [], :instructions => [])
   end
 
