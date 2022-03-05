@@ -18,6 +18,7 @@ class RecipesController < ApplicationController
 
   #GET /recipes/details/:name
   def show
+    # here not using find_by! coz don't need to raise an error
     @recipe = Recipe.find_by(name: params[:name])
     if @recipe
       @details = {
@@ -32,9 +33,11 @@ class RecipesController < ApplicationController
 
   # PUT /recipes
   def update
-    @recipe = Recipe.find_by(name: params[:recipe][:name])
+    # here use find_by! coz need to raise an error
+    @recipe = Recipe.find_by!(name: params[:recipe][:name])
     @recipe.update(recipe_params)
     head :no_content
+
   end
 
   private

@@ -4,7 +4,7 @@ module ExceptionHandler
 
   included do
     rescue_from ActiveRecord::RecordNotFound do |e|
-      json_response({ error: e.message}, :not_found)
+      json_response({ error: "Recipe does not exist"}, :not_found)
     end
 
     rescue_from ActiveRecord::RecordInvalid do |e|
