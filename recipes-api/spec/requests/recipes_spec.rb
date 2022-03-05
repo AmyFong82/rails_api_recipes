@@ -10,10 +10,12 @@ RSpec.describe "Recipes API", type: :request do
     # make HTTP get request before each example
     before { get '/recipes' }
 
-    it 'returns recipes' do
+    it 'returns an object with key: "recipeNames" in an Array' do
       # Note 'json' is a custom helper to parse JSON responses
       expect(json).not_to be_empty
-      expect(json.size).to eq(10)
+      expect(json.size).to eq(1)
+      expect(json).to include("recipeNames")
+      expect(json.first).to be_an(Array)
     end
 
     it 'returns status code 200' do
