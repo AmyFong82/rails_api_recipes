@@ -25,12 +25,12 @@ RSpec.describe "Recipes API", type: :request do
 
   # Test suite for GET /recipes/details/:name
   describe 'GET /recipes/details/:name' do
-    before { get "/recipes/details/#{:name}" }
+    before { get "/recipes/details/#{recipes.first.name}" }
 
     context 'when the record exists' do
       it 'returns the recipe' do
         expect(json).not_to be_empty
-        expect(json['name']).to eq(name)
+        expect(json['details']['ingredients']).to eq(recipes.first.ingredients)
       end
 
       it 'returns status code 200' do
